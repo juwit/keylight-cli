@@ -15,6 +15,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
+
+        <main-class>MainKt</main-class>
+
+        <graalvm.version>21.0.0.2</graalvm.version>
     </properties>
 
     <repositories>
@@ -63,6 +67,30 @@
                 <version>1.6.0</version>
                 <configuration>
                     <mainClass>MainKt</mainClass>
+                </configuration>
+            </plugin>
+
+            <!-- building native image with graal VM -->
+            <plugin>
+                <groupId>org.graalvm.nativeimage</groupId>
+                <artifactId>native-image-maven-plugin</artifactId>
+                <version>${graalvm.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>native-image</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>false</skip>
+                    <imageName>keyligh</imageName>
+                    <mainClass>MainKt</mainClass>
+                    <buildArgs>
+                        --no-fallback
+                        -H:IncludeResources='.*/input.*'
+                    </buildArgs>
                 </configuration>
             </plugin>
         </plugins>
