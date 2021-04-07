@@ -5,8 +5,6 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
-private val uri = URI("http://192.168.1.28:9123/elgato/lights")
-
 fun on(): Int {
     val onBody = """
             {
@@ -63,9 +61,11 @@ fun changeColor(color: Int): Int {
 }
 
 fun sendRequest(body: String): Int {
+    val url = discovery().get()
+
     val getRequest = HttpRequest.newBuilder()
         .PUT(HttpRequest.BodyPublishers.ofString(body))
-        .uri(uri)
+        .uri(URI.create("$url/elgato/lights"))
         .build()
 
     val client = HttpClient.newHttpClient();
