@@ -53,24 +53,6 @@
                             <goal>test-compile</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>kapt</id>
-                        <goals>
-                            <goal>kapt</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <sourceDir>src/main/kotlin</sourceDir>
-                            </sourceDirs>
-                            <annotationProcessorPaths>
-                                <annotationProcessorPath>
-                                    <groupId>info.picocli</groupId>
-                                    <artifactId>picocli-codegen</artifactId>
-                                    <version>${picocli.version}</version>
-                                </annotationProcessorPath>
-                            </annotationProcessorPaths>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -89,31 +71,66 @@
                     <mainClass>${main-class}</mainClass>
                 </configuration>
             </plugin>
-
-            <!-- building native image with graal VM -->
-            <plugin>
-                <groupId>org.graalvm.nativeimage</groupId>
-                <artifactId>native-image-maven-plugin</artifactId>
-                <version>${graalvm.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>native-image</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <imageName>keylight</imageName>
-                    <mainClass>${main-class}</mainClass>
-                    <buildArgs>
-                        --no-fallback
-                        --enable-https
-                    </buildArgs>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>native-image</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-plugin</artifactId>
+                        <version>1.4.31</version>
+                        <executions>
+                            <execution>
+                                <id>kapt</id>
+                                <goals>
+                                    <goal>kapt</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirs>
+                                        <sourceDir>src/main/kotlin</sourceDir>
+                                    </sourceDirs>
+                                    <annotationProcessorPaths>
+                                        <annotationProcessorPath>
+                                            <groupId>info.picocli</groupId>
+                                            <artifactId>picocli-codegen</artifactId>
+                                            <version>${picocli.version}</version>
+                                        </annotationProcessorPath>
+                                    </annotationProcessorPaths>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- building native image with graal VM -->
+                    <plugin>
+                        <groupId>org.graalvm.nativeimage</groupId>
+                        <artifactId>native-image-maven-plugin</artifactId>
+                        <version>${graalvm.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>native-image</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <imageName>keylight</imageName>
+                            <mainClass>${main-class}</mainClass>
+                            <buildArgs>
+                                --no-fallback
+                                --enable-https
+                            </buildArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
