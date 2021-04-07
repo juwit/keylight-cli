@@ -7,7 +7,7 @@ import java.util.concurrent.Callable
 @CommandLine.Command(name = "color")
 class KeyLightColor() : Callable<Int> {
 
-    @CommandLine.Parameters(index = "0")
+    @CommandLine.Parameters(description = [ "the color temperature to set (value must be between 2900 and 7000)"])
     var color: Int = 0
 
     @CommandLine.Spec

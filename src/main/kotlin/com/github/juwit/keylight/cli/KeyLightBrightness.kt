@@ -7,7 +7,7 @@ import java.util.concurrent.Callable
 @CommandLine.Command(name = "brightness")
 class KeyLightBrightness() : Callable<Int> {
 
-    @CommandLine.Parameters(index = "0")
+    @CommandLine.Parameters(description = [ "the brightness to set (value must be between 0 and 100)"])
     var brightness: Int = 0
 
     @CommandLine.Spec
