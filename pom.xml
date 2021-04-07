@@ -16,7 +16,7 @@
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
 
-        <main-class>MainKt</main-class>
+        <main-class>com.github.juwit.keylight.MainKt</main-class>
 
         <graalvm.version>21.0.0.2</graalvm.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>

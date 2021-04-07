@@ -1,3 +1,5 @@
+package com.github.juwit.keylight
+
 import com.github.juwit.keylight.cli.KeyLightCLI
 import picocli.CommandLine
 import kotlin.system.exitProcess
