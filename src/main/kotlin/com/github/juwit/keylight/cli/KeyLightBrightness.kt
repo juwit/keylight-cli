@@ -1,7 +1,7 @@
 package com.github.juwit.keylight.cli
 
+import com.github.juwit.keylight.service.changeBrightness
 import picocli.CommandLine
-import sendRequest
 import java.util.concurrent.Callable
 
 @CommandLine.Command(name = "brightness")
@@ -24,16 +24,7 @@ class KeyLightBrightness() : Callable<Int> {
             )
 
         }
-        val body = """
-            {
-              "lights": [
-                {
-                  "brightness": $brightness
-                }
-              ]
-            }
-        """.trimIndent()
-        return sendRequest(body)
+        return changeBrightness(brightness)
     }
 
 }

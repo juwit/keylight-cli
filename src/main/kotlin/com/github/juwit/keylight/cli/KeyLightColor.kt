@@ -1,7 +1,7 @@
 package com.github.juwit.keylight.cli
 
+import com.github.juwit.keylight.service.changeColor
 import picocli.CommandLine
-import sendRequest
 import java.util.concurrent.Callable
 
 @CommandLine.Command(name = "color")
@@ -23,19 +23,7 @@ class KeyLightColor() : Callable<Int> {
                 """.trimIndent()
             )
         }
-        // régression linéaire basique
-        val keyLightColor = -0.049 * color + 486
-        val rounded = Math.round(keyLightColor).toInt()
-        val body = """
-            {
-              "lights": [
-                {
-                  "temperature": $rounded
-                }
-              ]
-            }
-        """.trimIndent()
-        return sendRequest(body)
+        return changeColor(color)
     }
 
 }
